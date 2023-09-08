@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&family=Merriweather:wght@300&display=swap');
+
+li{
+    list-style: none;
+}
+
+.shadow{
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.2);
+}
+
+.nav-items{
+    position: relative;
+    text-transform: uppercase;
+    font-size: 0.93rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.nav-items::before{
+    content: "";
+    position: absolute;
+    width:  0%;
+    top: -25px;
+    height: 1px;
+    background: #a86e3b;
+    transition: all .5s;
+}
+
+.nav-items:hover{
+    color: #a86e3b;
+}
+
+.nav-items:hover::before{
+    width: 100%;
+}
+
+.Cinzel{
+    font-family: 'Cinzel', serif;
+}
+
+.Merriweather{
+font-family: 'Merriweather', serif;
+}
+
+
+.btn{
+    position: relative;
+    background: transparent;
+    transition: 0.4s all ease-in-out 0s;
+    z-index: 1;
+}
+
+.btn:hover{
+    color: #fff;
+}
+
+.btn::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-color: #007bff;
+    transition: 0.4s all ease-in-out 0s;
+}
+
+.btn1::before{
+    left: unset;
+    right: 0;
+    width: 0;
+}
+
+.btn1:hover::before{
+    right: unset;
+    left: 0;
+    width: 100%;
+}
+
+/* Contact Image  */
+ .contactImg::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+ }
+
+/* Image Hover */
+.outer{
+    transform: 0.5s all ease;
+    
+}
+.product:hover .inner{
+    display: block;
+}
+.cartBtn{
+    bottom: 0px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 0.5s all ease-in;
+}
+
+.product:hover .cartBtn{
+    opacity: 100%;
+}
+.deal-hero {
+    background-image: url(./Images/deal.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    position: relative;
+}
+
+.go3958317564 {
+    font-family: 'Cinzel', serif!important;
+    font-size: 12px;
+  }
+  
+
+
+@media screen and (max-width : 767px) {
+    .nav-items{
+        padding-left: 20px;
+    }
+    .nav-items:hover::before{
+        width: 0%;
+    }
+    .deal-hero{
+        height: 50vh;
+    }
+}
+
