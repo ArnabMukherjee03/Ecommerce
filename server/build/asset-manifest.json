@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/static/css/main.51254736.css",
+    "main.js": "/static/js/main.b67b148c.js",
+    "static/media/deal.jpg": "/static/media/deal.0398d22f958932c22aae.jpg",
+    "static/media/banner1.webp": "/static/media/banner1.56ec0d387d1260506fb2.webp",
+    "index.html": "/index.html",
+    "main.51254736.css.map": "/static/css/main.51254736.css.map",
+    "main.b67b148c.js.map": "/static/js/main.b67b148c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.51254736.css",
+    "static/js/main.b67b148c.js"
+  ]
+}
