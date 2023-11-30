@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const cookieParser = require("cookie-parser")
-const path = require('path');
+
 
 // All Routers
 const authRouter = require("./routes/auth");
@@ -19,10 +19,6 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.use(express.static(path.resolve(__dirname, 'build')));
-
-
 
 
 // Routes
