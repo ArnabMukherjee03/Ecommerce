@@ -10,3 +10,5 @@ router.post('/newproduct',newproduct)
       .delete('/delete/:id',deleteProduct)      
 
 exports.router = router;
+
+

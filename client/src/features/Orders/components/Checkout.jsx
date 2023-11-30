@@ -68,7 +68,6 @@ function Checkout() {
   };
 
   const handleAddress = (e) => {
-    console.log(e.target.value);
     setSelectedAddress(address[e.target.value]);
   };
 
@@ -122,7 +121,7 @@ function Checkout() {
       };
       dispatch(createOrderAsync(order));
     } else {
-      alert("Enter Address and Payment method");
+      toast.error("Enter Address and Payment method");
     }
   };
 
@@ -355,7 +354,7 @@ function Checkout() {
                       <div className="h-[100px] w-[100px] flex-shrink-0 overflow-hidden  border border-gray-200">
                         <img
                           src={
-                            item.productId.images && item.productId.images[0]
+                            item.productId.images && item.productId.images[0].images[0]
                           }
                           alt={item.productId.title}
                           className="h-full w-full object-cover object-center"
@@ -375,7 +374,7 @@ function Checkout() {
                             </p>
                           </div>
                           <p className="Merriweather mt-1 text-sm text-gray-500">
-                            {item.productId.brand}
+                            {item.productId.brand && item.productId.brand.label}
                           </p>
                         </div>
                         <div className="Merriweather flex flex-1 items-end justify-between text-sm">

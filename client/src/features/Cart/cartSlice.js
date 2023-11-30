@@ -12,6 +12,7 @@ const initialState = {
   status: "idle",
   items: [],
   cartLoaded: false,
+  updateStatus: 'idle',
   error: null,
 };
 
@@ -104,10 +105,10 @@ export const cartSlice = createSlice({
         state.cartLoaded = false;
       })
       .addCase(updateCartAsync.pending, (state) => {
-        state.status = "loading";
+        state.updateStatus = "loading";
       })
       .addCase(updateCartAsync.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.updateStatus = "idle";
         const index = state.items.findIndex(
           (item) => item._id === action.payload._id
         );
@@ -115,7 +116,7 @@ export const cartSlice = createSlice({
         state.error = null;
       })
       .addCase(updateCartAsync.rejected, (state, action) => {
-        state.status = "rejected";
+        state.updateStatus = "rejected";
         state.error = action.payload;
       })
       .addCase(deleteItemFromCartAsync.pending, (state) => {
@@ -124,8 +125,10 @@ export const cartSlice = createSlice({
       .addCase(deleteItemFromCartAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const index = state.items.findIndex(
-          (item) => item.id === action.payload.id
+          (item) => item._id === action.payload.id
         );
+
+        console.log(index);
         state.items.splice(index, 1);
         state.error = null;
       })
@@ -147,5 +150,6 @@ export const selectItems = (state) => state.cart.items;
 export const selectCartStatus = (state) => state.cart.status;
 export const selectCartLoaded = (state) => state.cart.cartLoaded;
 export const selectError = (state) => state.cart.error;
+export const selectUpdateStatus = (state) => state.cart.updateStatus;
 
 export default cartSlice.reducer;

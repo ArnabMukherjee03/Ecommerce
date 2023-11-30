@@ -47,26 +47,26 @@ const Nav = () => {
             <div className="flex gap-6 items-center">
               <li className="lg:text-[18px]">
                 {user ? (
-                  <li className="Cinzel text-[14px] flex flex-col items-center">
+                  <div className="Cinzel text-[14px] flex flex-col items-center">
                     <BiSolidUser />
                     <NavLink to="/account" className="text-[12px]">
                       {" "}
                       Profile{" "}
                     </NavLink>
-                  </li>
+                  </div>
                 ) : (
-                  <li className="Cinzel text-[14px] flex flex-col items-center">
+                  <div className="Cinzel text-[14px] flex flex-col items-center">
                     <BiSolidUser />
                     <NavLink to="/login" className="text-[12px]">
                       {" "}
                       Login{" "}
                     </NavLink>
-                  </li>
+                  </div>
                 )}
               </li>
               <li className="Cinzel text-[14px] flex flex-col items-center">
                 <BsFillCartFill />
-                <NavLink to="/cart" className="text-[12px]">
+                <NavLink to="/mycart" className="text-[12px]">
                   {" "}
                   Cart{" "}
                 </NavLink>

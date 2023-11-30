@@ -25,7 +25,9 @@ exports.createOrder = async (req, res) => {
 
 exports.fetchOrdersByUser = async (req,res)=>{
   try {
-    
+     const id = getDataFromToken(req);
+     const orders = await Order.find({user: id});
+     res.status(201).json(orders);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -3,8 +3,14 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-  title: { type: String, required: true, unique: true },
-  description: { type: String, required: true },
+  title: { type: String, 
+    required: true, 
+    unique: true 
+  },
+  description: { 
+    type: String, 
+    required: true 
+  },
   price: {
     type: Number,
     min: [1, "wrong min price"],
@@ -29,10 +35,10 @@ const productSchema = new Schema({
     },
   },
   stock: { type: Number, min: [0, "wrong min stock"], default: 0 },
-  brand: { type: String, required: true },
+  brand: { label:{type: String, required: true},value:{type: String, required: true} },
   category: { type: String, required: true },
-  images: { type: [String], required: true },
-  colors: { type: [Schema.Types.Mixed] },
+  images: [{color:{type : String},images:{type:[String]}}],
+  colors: { type:[{name:{type: String},code:{type:String}}]},
   sizes: { 
     type: [Schema.Types.Mixed],
     default: ["S","M","L","XL"]
@@ -40,7 +46,7 @@ const productSchema = new Schema({
   type: { type: String, required: true },
   gender: { type: String, required: true },
   deleted: { type: Boolean, default: false },
-});
+},{ timestamps: true });
 
 const Product = mongoose.model("products", productSchema);
 

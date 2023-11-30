@@ -44,7 +44,7 @@ const UserSideBar = () => {
           alt=""
           srcset=""
         />
-        <p>My Orders</p>
+        <NavLink to="/account/orders"><p>My Orders</p></NavLink>
       </div>
       {/* My Orders: End */}
       {/* Account Settings: Start */}

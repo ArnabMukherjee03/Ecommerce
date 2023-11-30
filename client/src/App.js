@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { fetchAllProductsasync } from "./features/Product/productSlice";
 import { checkAuthAsync } from "./features/Auth/authSlice";
 import {Toaster} from 'react-hot-toast';
 
@@ -18,11 +17,13 @@ import UserProfilePage from "./pages/UserProfile";
 import Footer from "./pages/Footer";
 import UserAddress from "./pages/UserAddress";
 import OrderSucess from "./pages/OrderSuccess";
+import OrderPage from "./pages/OrderPage";
+import Protected from "./pages/Protected Route/Protected";
+import IsUser from "./pages/Protected Route/IsUser";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllProductsasync());
     dispatch(checkAuthAsync());
   }, [dispatch]);
 
@@ -37,13 +38,14 @@ const App = () => {
         <Route path="/" Component={Home} />
         <Route path="/products/:type" Component={Product}></Route>
         <Route path="product/:id" Component={SingleProduct}></Route>
-        <Route path="/login" Component={Signin} />
-        <Route path="/signup" Component={Signup} />
-        <Route path="/cart" Component={CartPage}/>
-        <Route path="/checkout" Component={CheckoutPage}/>
-        <Route path="/account" Component={UserProfilePage}/>
-        <Route path="/account/addresses" Component={UserAddress}/>
-        <Route path="/ordersuccess/:id" Component={OrderSucess}/>
+        <Route path="/login" element={<IsUser><Signin/></IsUser>} />
+        <Route path="/signup" element={<IsUser><Signup/></IsUser>} />
+        <Route path="/mycart" Component={CartPage}/>
+        <Route path="/checkout" element={<Protected><CheckoutPage/></Protected>}/>
+        <Route path="/account" element={<Protected><UserProfilePage/></Protected>}/>
+        <Route path="/account/addresses" element={<Protected><UserAddress/></Protected>}/>
+        <Route path="/account/orders" element={<Protected><OrderPage/></Protected>}/>
+        <Route path="/ordersuccess/:id" element={<Protected><OrderSucess/></Protected>}/>
         <Route path="*" element={<div>No Page Exist</div>}/>
       </Routes>
       <Footer />

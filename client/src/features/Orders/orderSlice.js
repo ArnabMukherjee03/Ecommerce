@@ -73,7 +73,17 @@ export const orderSlice = createSlice({
         state.status = 'rejected';
         state.error = action.payload;
       })
-      
+      .addCase(fetchOrderByUserAsync.pending,(state,action)=>{
+         state.status = "loading";
+      })
+      .addCase(fetchOrderByUserAsync.fulfilled,(state,action)=>{
+        state.status = "idle";
+        state.orders = action.payload;
+     })
+     .addCase(fetchOrderByUserAsync.rejected,(state,action)=>{
+      state.status = "rejected";
+      state.error = action.payload;
+   })
   },
 });
 

@@ -5,7 +5,7 @@ export function createOrder(order) {
         try {
             const response = await axios.post("/order/neworder",order)
             const data = await response.data;
-            console.log(data)
+          console.log(data)
             resolve({ data });
         } catch (error) {
             reject({error});
@@ -28,8 +28,9 @@ export function createOrder(order) {
   export function fetchOrderbyUser() {
     return new Promise(async (resolve,reject) => {
         try {
-            const response = axios.get("")
+            const response = await axios.get("/order")
             const data = await response.data;
+            console.log(data);
             resolve({ data });
         } catch (error) {
             reject({error})

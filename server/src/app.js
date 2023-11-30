@@ -11,7 +11,8 @@ const cartRouter = require("./routes/cart");
 const UserRouter = require("./routes/user");
 const addressRouter = require("./routes/address");
 const orderRouter = require("./routes/order");
-
+const categoryRouter = require("./routes/category");
+const brandRouter = require("./routes/brand");
 // Middlewares
 
 app.use(cookieParser());
@@ -30,8 +31,8 @@ app.use('/product',productRouter.router);
 app.use('/cart',cartRouter.router);
 app.use('/user',UserRouter.router);
 app.use('/address',addressRouter.router);
-app.use('/order',orderRouter.router)
-
-
+app.use('/order',orderRouter.router);
+app.use("/category",categoryRouter.router);
+app.use("/brand",brandRouter.router);
 
 module.exports = app;

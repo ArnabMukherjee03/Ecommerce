@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { FiTruck } from "react-icons/fi";
-// import Star from "../../Rate/Star";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductByIdAsync, selectProductById } from "../productSlice";
-
+import { fetchProductByIdAsync, selectProductById,selectloading} from "../productSlice";
+import { MutatingDots } from 'react-loader-spinner';
 import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 
 const ProductDetails = () => {
+  window.scroll(0,0);
   const [imgNo, setImgNo] = useState(0);
   const [size, setSize] = useState("L");
+  const [images,setImages] = useState([]);
+  const [color,setColor] = useState('');
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -20,7 +22,26 @@ const ProductDetails = () => {
 
   const productdetail = useSelector(selectProductById);
   const items = useSelector(selectItems);
+  const status = useSelector(selectloading);
+  useEffect(()=>{
+    if(productdetail && productdetail.colors){
+      setColor(productdetail.colors[0].name.toUpperCase())
+    }
+  },[productdetail])
 
+  const handleColorChange = (selectedColor) => {
+    setColor(selectedColor); // Update the selected color in state
+  };
+
+  useEffect(()=>{
+  
+      if (productdetail && productdetail.images) {
+        const img = productdetail.images.find(image => image.color.toUpperCase() === color);  
+        setImages(img && img.images);
+       }
+  
+  },[productdetail,color])
+ 
   const handleCart = (e) => {
     e.preventDefault();
     if (
@@ -30,6 +51,8 @@ const ProductDetails = () => {
       const newItem = {
         productId: productdetail._id,
         quantity: 1,
+        size: "L",
+        color: productdetail.colors[0].name
       };
       dispatch(addToCartAsync(newItem));
     } else {
@@ -46,6 +69,23 @@ const ProductDetails = () => {
 
   return (
     <>
+     {
+      status === "loading"?
+      <div className="h-[50vh] w-full flex items-center justify-center">
+      <MutatingDots 
+        height="100"
+        width="100"
+        color="#007bff"
+        secondaryColor= '#007bff'
+        radius='10'
+        ariaLabel="mutating-dots-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+       />
+       </div>
+      :
+      <div className="">
       <div className="">
         <p className="py-[30px] ps-4 lg:ps-10 Merriweather text-xs lg:text-xs text-gray-400">
           Home &gt; AllProducts &gt;{" "}
@@ -61,10 +101,10 @@ const ProductDetails = () => {
             <div className="w-[100%] lg:w-[58%]">
               <div className="flex flex-col-reverse lg:flex-row gap-2 justify-evenly">
                 <div className="flex w-[100%] lg:w-[18%] flex-row lg:flex-col gap-3">
-                  {productdetail &&
-                    productdetail.images.map((imgsrc, index) => {
+                  {images &&
+                    images.map((imgsrc, index) => {
                       return (
-                        <div className="w-full transition-all  duration-100 hover:border-[1px]">
+                        <div key={index} className="w-full transition-all  duration-100 hover:border-[1px]">
                           <img
                             src={imgsrc}
                             className="w-full transition-all  duration-100 hover:p-[10px]"
@@ -77,7 +117,7 @@ const ProductDetails = () => {
                 </div>
                 <div className="w-full lg:w-[80%]">
                   <img
-                    src={productdetail && productdetail.images[imgNo]}
+                    src={images && images[imgNo]}
                     alt=""
                     className="w-full"
                   />
@@ -97,7 +137,7 @@ const ProductDetails = () => {
                 <p className="Cinzel">
                   by{" "}
                   <span className="text-black text-[16px] ps-2">
-                    {productdetail && productdetail.brand}
+                    {productdetail && productdetail.brand.label}
                   </span>
                 </p>
                 <p className="mt-2 Merriweather text-sm">
@@ -113,9 +153,9 @@ const ProductDetails = () => {
                 <p className="mt-4 text-sm">Size : {size}</p>
                 <div className="flex gap-2 mt-3">
                   {productdetail &&
-                    productdetail.sizes.map((sizes) => {
+                    productdetail.sizes.map((sizes,index) => {
                       return (
-                        <p
+                        <p key={index}
                           className={`p-[5] border-[1px] border-black w-[40px] cursor-pointer text-center ${
                             size === sizes ? "bg-black text-white" : ""
                           }`}
@@ -129,17 +169,16 @@ const ProductDetails = () => {
                     })}
                 </div>
                 <div className="mt-4 Merriweather">
-                  <p className="text-sm">Color: White</p>
+                  <p className="text-sm">Color: {color}</p>
                   <div className="mt-4 flex gap-3">
                     {productdetail &&
                       productdetail.colors.map((color) => {
                         return (
-                          <div className="h-[40px] w-[40px] rounded-[50%] border-[1px] flex items-center justify-center border-black">
-                            <div
-                              className="h-[20px] w-[20px] rounded-[50%]"
-                              style={{ backgroundColor: `${color}` }}
+                            <div key={color._id}
+                              className={`h-[20px] w-[20px] cursor-pointer ${color.name === "White"?'border-[1px] border-black':''}`}
+                              style={{ backgroundColor: `${color.code}` }}
+                              onClick={()=>{handleColorChange(color.name.toUpperCase())}}
                             ></div>
-                          </div>
                         );
                       })}
                   </div>
@@ -183,6 +222,8 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      </div>
+      }
     </>
   );
 };

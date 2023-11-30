@@ -4,8 +4,8 @@ const router = express.Router();
 
 router
   .post("/neworder", createOrder)
-  .get("/own", fetchOrdersByUser)
+  .get("/", fetchOrdersByUser)
   .delete("/:id", deleteOrder)
  
-
+  
 exports.router = router;

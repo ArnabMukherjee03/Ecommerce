@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 const Product = ()=>{
     const {type} =  useParams();
-    console.log(type);
     return(
         <div className="relative">
           <ProductHead type={type}></ProductHead>

@@ -97,6 +97,7 @@ export const authSlice = createSlice({
       })
       .addCase(loginUserAsync.pending, (state) => {
         state.status = "loading";
+        state.isSuccess = true;
         state.error = null;
       })
       .addCase(loginUserAsync.fulfilled, (state, action) => {
@@ -112,17 +113,20 @@ export const authSlice = createSlice({
       })
       .addCase(signOutAsync.pending, (state) => {
         state.status = "loading";
+        state.userChecked = false;
         state.error = null;
       })
       .addCase(signOutAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUserToken = null;
+        state.userChecked = false;
         state.error = null;
       })
       .addCase(signOutAsync.rejected, (state, action) => {
         state.status = "rejected";
         state.loggedInUserToken = null;
         state.error = action.payload;
+        state.userChecked = false;
       })
       .addCase(checkAuthAsync.pending, (state) => {
         state.status = "loading";
@@ -143,6 +147,5 @@ export const selectSucess = (state) => state.auth.isSuccess;
 export const selectLoggedInUser = (state) => state.auth.loggedInUserToken;
 export const selectError = (state) => state.auth.error;
 export const selectUserChecked = (state) => state.auth.userChecked;
-
 export const { resetSuccess } = authSlice.actions;
 export default authSlice.reducer;
